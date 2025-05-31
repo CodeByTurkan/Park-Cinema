@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!-- npx @tailwindcss/cli -i input.css -o output.css --watch -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Park Cinema</title>
+  <link rel="stylesheet" href="output.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body class="bg-[#373737]">
+<header class="w-[90%] mx-auto my-5 ">
+    <nav class="text-white flex justify-center items-center min-[770px]:justify-between">
+    <img class="w-40" src="img/logo.svg" alt="">
+    <ul class="hidden min-[770px]:flex min-[770px]:gap-10">
+        <li><a href="">Cinemas</a></li>
+        <li><a href="">Campaings</a></li>
+        <li><a href="">FAQ</a></li>
+        <li><a href="">Contact</a></li>
+        <li><a href="">Profile</a></li>
+    </ul>
+    <div class="hidden min-[770px]:flex min-[770px]:gap-3 min-[770px]:items-center">
+        <img src="img/en-flag.svg" alt="">
+        <span>EN</span>
+        <i class="fa-solid fa-angle-down"></i>
+    </div>
+    </nav>
+
+    <!-- mobile menu -->
+    <div class="min-[770px]:hidden">
+    <div onclick="openMenu()" id="mobileMenuTab" class="fixed bottom-10 left-10">
+        <i class="fa-solid fa-bars bg-[#86312A] p-4 border border-white rounded-full text-white text-center"></i>
+    </div>
+
+    <!-- Modal -->
+    <div id="mobileMenu" class="fixed  inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300 ease-in-out">
+        <div id="modalContent" class="fixed bottom-0 bg-[#373737]/70 l w-full p-6 rounded-t-2xl shadow-lg transform translate-y-full transition-transform duration-500 ease-in-out">
+        
+        <!-- close Modal -->
+        <div onclick="closeModal()" class="flex items-center justify-center mb-4">
+            <div class="border-2 border-gray-100 w-40"></div>
+        </div>
+
+        <div class="flex items-center justify-center p-4">
+            <div class="grid grid-cols-2 gap-4 w-full">
+            <div class="bg-gray-200 rounded-xl flex items-center justify-start gap-2 p-4">
+                <img class="w-13" src="img/glasses.png" alt="">
+                <span class="text-sm font-semibold">Profile</span>
+            </div>
+            <div class="bg-gray-200 rounded-xl flex items-center justify-start gap-2 p-4">
+                <img class="w-11" src="img/ticket.png" alt="">
+                <span class="text-sm font-semibold">My Tickets</span>
+            </div>
+            <div class="bg-gray-200 rounded-xl flex items-center justify-center gap-2 p-4 col-span-2">
+                <img class="w-13" src="img/film.png" alt="">
+                <span class="text-sm font-semibold">Cinemas</span>
+            </div>
+            <div class="bg-gray-200 rounded-xl flex items-center justify-center gap-2 p-4 col-span-2">
+                <img class="w-13" src="img/alarm.png" alt="">
+                <span class="text-sm font-semibold">Campaings</span>
+            </div>
+            <div class="bg-white rounded-xl flex items-center justify-start gap-2 p-4">
+                <img src="img/call.svg" alt="">
+                <span class="text-sm font-semibold">Contact</span>
+            </div>
+            <div class="bg-white rounded-xl flex items-center justify-start gap-2 p-4">
+                <img src="img/faq.svg" alt="">
+                <span class="text-sm font-semibold">FAQ</span>
+            </div>
+            <div class="bg-gray-200 rounded-xl flex items-center justify-start gap-2 p-4">
+                <img src="img/terms.svg" alt="">
+                <span class="text-sm font-semibold">Legal Terms</span>
+            </div>
+            <div class="bg-white rounded-xl flex items-center justify-center p-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" class="w-full max-w-[150px]">
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+</header>
+<main>
+    <div id="movieDetailsById" class="mx-auto w-[90%] text-white p-6 rounded-lg flex flex-col min-[770px]:flex-row gap-8">
+        <!-- pt-[56.25%] -->
+         <!-- movie details -->
+    </div>
+</main>
+<footer class="bg-[#812D24] text-white px-10 py-8">
+<div class="w-[90%] mx-auto m-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm my-8 md:mt-0">
+        <div class="space-y-6">
+            <img src="img/logo.svg" alt="Park Cinema Logo" class="h-12">
+        </div>
+    <div class="space-y-2">
+        <p class="font-semibold">Cinemas</p>
+        <p class="font-semibold">Campaigns</p>
+        <p class="font-semibold">FAQ</p>
+    </div>
+    <div class="space-y-2">
+        <p class="font-semibold">Profile</p>
+        <p class="font-semibold">Contact</p>
+        <p class="font-semibold">Legal Terms</p>
+    </div>
+    <div>
+        <p class="font-semibold mb-2">Follow Us</p>
+        <div class="flex gap-3 flex-wrap">
+        <div class="bg-white rounded-full p-2 "><i class="fa-brands fa-instagram fa-xl  text-[#D52B1E]"></i> </div>
+        <div class="bg-white rounded-full p-2"><i class="fa-brands fa-facebook fa-xl  text-[#D52B1E]"></i></div>
+        <div class="bg-white rounded-full p-2"><i class="fa-brands fa-youtube fa-xl  text-[#D52B1E]"></i></div>
+        <div class="bg-white rounded-full p-2"><i class="fa-brands fa-telegram fa-xl  text-[#D52B1E]"></i></div>
+        <div class="bg-white rounded-full p-2"><i class="fa-brands fa-tiktok fa-xl  text-[#D52B1E]"></i></div>
+        </div>
+    </div>
+    </div>
+    <div class="my-4">
+    <img src="img/Visa_Logo.png" alt="Visa" class="h-6">
+    </div> 
+    <div class="mt-8 flex justify-between my-8">
+        <p class="text-sm">© Park Cinema, 2025</p>
+    <p class="text-sm text-right">ESAM Innovations</p>
+    </div>
+</div>
+</footer>
+<script src="details.js">
+    
+</script>
+  
+</body>
+</html>

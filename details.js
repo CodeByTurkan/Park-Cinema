@@ -71,6 +71,8 @@ function embeded(url) {
 // Çoxlu obyekt (yenimap və ya bütün filmlər)	code += ... və map və ya forEach
 
 
+
+
   
   
 
@@ -78,8 +80,42 @@ function showMovieDetails(movies) {
     let movieGenres = movies.genres.map(item => item.title).join('')
     //   array idi onu string eledim, ayda youtube videos dehsetda oz videom
     let movieLang =  movies.languages.map(item =>  `<img  src="https://flagcdn.com/w40/${item.toLowerCase()}.png" alt="${item}" class="w-5 h-5 rounded-full" />`).join(' ') //eger burda array icinde direct sstringdirse orda birder onun icindeki nese yazmaga gerek yoxdu diret item yaz
-    console.log();
+
+        // arrayin check edende onun uzunluguna easesn edirik. cunki [] still truedu, ona gore bize empty or full lazim olanda lengthle yoxlayiriq
+    let subtitles =  movies.subtitles.length === 0 ?`<span>Altyazı yoxdur</span>`: movies.subtitles.map(item =>  `<img  src="https://flagcdn.com/w40/${item.toLowerCase()}.png" alt="${item}" class="w-5 h-5 rounded-full" />`).join(' ')
+    let allActors = movies.actors.map(item => item)
     
+        const ageToNumber = {
+            "zero": 0,
+            "one": 1,
+            "two": 2,
+            "three": 3,
+            "four": 4,
+            "five": 5,
+            "six": 6,
+            "seven": 7,
+            "eight": 8,
+            "nine": 9,
+            "ten": 10,
+            "eleven": 11,
+            "twelve": 12,
+            "thirteen": 13,
+            "fourteen": 14,
+            "fifteen": 15,
+            "sixteen": 16,
+            "seventeen": 17,
+            "eighteen": 18,
+            "nineteen": 19,
+            "twenty": 20
+        }
+
+        const age = movies.ageLimit.toLowerCase()
+        const number = ageToNumber[age]
+        console.log(number);
+        
+        // const keys = Object.keys(ageToNumber)
+        // console.log(keys);
+        // property
 
     // men artiq bir cos seyi ciarmiramki maplayim
         movieDetailsById.innerHTML = 
@@ -87,7 +123,7 @@ function showMovieDetails(movies) {
             <!-- Trailer -->
             <div class="min-[770px]:w-[50%] order-first min-[770px]:order-last">
                 <iframe
-                    class="w-full min-[770px]:h-[50%] h-full  rounded-lg"
+                    class="w-full min-[770px]:h-[60%] h-full  rounded-lg"
                     src="${embeded(movies.youtubeUrl)}"
                     frameborder="0"
                     allowfullscreen
@@ -106,13 +142,16 @@ function showMovieDetails(movies) {
                             <p class="font-semibold">Dil:</p>
                             <p class="font-semibold flex gap-2">${movieLang}</p>
                         </div>
-                        <p><span class="font-semibold">Altyazı:</span> <span class="text-red-500">Altyazı yoxdur</span></p>
-                        <p><span class="font-semibold">Müddət:</span> ${movies.duration}</p>
-                        <p><span class="font-semibold">İl:</span> 2025</p>
+                        <p class="flex gap-2 items-center">
+                            <span class="font-semibold">Altyazı:</span>
+                             <span class="text-red-500">${subtitles}</span>
+                        </p>
+                        <p><span class="font-semibold">Müddət:</span> ${movies.duration} minutes</p>
+                        <p><span class="font-semibold">İl:</span> ${movies.year}</p>
                         <p><span class="font-semibold">Ölkə:</span> ${movies.country}</p>
                         <p><span class="font-semibold">Rejissor:</span> ${movies.director}</p>
-                        <p><span class="font-semibold">Aktorlar:</span> Cimi Gela, Selesta Barber</p>
-                        <p><span class="font-semibold">Yaş Həddi:</span> 6+</p>
+                        <p><span class="font-semibold">Aktorlar:</span> ${allActors}</p>
+                        <p><span class="font-semibold">Yaş Həddi:</span> ${number}+</p>
                         <p><span class="font-semibold">Nümayiş Tarixi:</span> 05.06.2025</p>
                     </div>
                     

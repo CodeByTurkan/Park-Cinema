@@ -1,6 +1,8 @@
 const mobileMenuTab = document.getElementById('mobileMenuTab');
     const mobileMenu = document.getElementById('mobileMenu');
     const modalContent = document.getElementById('modalContent');
+    
+ const loader = document.getElementById('loader')
 
     function openMenu() {
       mobileMenuTab.classList.add('hidden');
@@ -24,14 +26,13 @@ const mobileMenuTab = document.getElementById('mobileMenuTab');
     }
 
 const movieId = new URLSearchParams(window.location.search).get('id')
-console.log(movieId)
 
 async function getMovieDetails() {
     const res = await fetch('https://parkcinema-data-eta.vercel.app/landing')
     const movieDetails = await res.json()
     const movies = movieDetails.find(item => item.id === movieId)
-    console.log(movies)
     showMovieDetails(movies)
+    loader.style.display = 'none';
     
 }
 getMovieDetails()
@@ -77,7 +78,7 @@ function embeded(url) {
   
 
 function showMovieDetails(movies) {
-    let movieGenres = movies.genres.map(item => item.title).join('')
+    let movieGenres = movies.genres.map(item => item.title).join(', ')
     //   array idi onu string eledim, ayda youtube videos dehsetda oz videom
     let movieLang =  movies.languages.map(item =>  `<img  src="https://flagcdn.com/w40/${item.toLowerCase()}.png" alt="${item}" class="w-5 h-5 rounded-full" />`).join(' ') //eger burda array icinde direct sstringdirse orda birder onun icindeki nese yazmaga gerek yoxdu diret item yaz
 
@@ -111,12 +112,21 @@ function showMovieDetails(movies) {
 
         const age = movies.ageLimit.toLowerCase()
         const number = ageToNumber[age]
-        console.log(number);
-        
+
         // const keys = Object.keys(ageToNumber)
         // console.log(keys);
         // property
+        
 
+        let firstScreenDate = movies.firstScreeningDate.split("T")[0].split("-").reverse().join(".")
+        
+
+        let hour = String(Math.floor(movies.duration / 60)).padStart(2, '0')
+        let minute =  String(movies.duration % 60).padStart(2, '0')
+        let second ='00'
+        let totalMinute = `${hour}:${minute}:${second}`
+        
+ 
     // men artiq bir cos seyi ciarmiramki maplayim
         movieDetailsById.innerHTML = 
         `
@@ -146,21 +156,77 @@ function showMovieDetails(movies) {
                             <span class="font-semibold">Altyazı:</span>
                              <span class="text-red-500">${subtitles}</span>
                         </p>
-                        <p><span class="font-semibold">Müddət:</span> ${movies.duration} minutes</p>
+                        <p><span class="font-semibold">Müddət:</span> ${totalMinute}</p>
                         <p><span class="font-semibold">İl:</span> ${movies.year}</p>
                         <p><span class="font-semibold">Ölkə:</span> ${movies.country}</p>
                         <p><span class="font-semibold">Rejissor:</span> ${movies.director}</p>
                         <p><span class="font-semibold">Aktorlar:</span> ${allActors}</p>
                         <p><span class="font-semibold">Yaş Həddi:</span> ${number}+</p>
-                        <p><span class="font-semibold">Nümayiş Tarixi:</span> 05.06.2025</p>
+                        <p><span class="font-semibold">Nümayiş Tarixi:</span> ${firstScreenDate}</p>
                     </div>
                     
                 </div>
-                <div class="mt-10">
+                <div class="mt-8">
                     <p>${movies.description}</p>
                 </div>
             </div>
             
         `
-        
 }
+
+
+const buyTicket = document.getElementById('buyTicket')
+async function chooseTicket() {
+    const res = await fetch('https://parkcinema-data-eta.vercel.app/detail')
+    const chooseTicketData = await res.json()
+    console.log(chooseTicketData)
+    showChosenTickets(chooseTicketData)    
+}
+chooseTicket()
+
+const theatreTitle = document.getElementById('theatreTitle')
+const chooseLanguage = document.getElementById('chooseLanguage')
+let uniqueTheathe = new Set()
+
+function showChosenTickets(chooseTicketData) {
+    theatreTitle.innerHTML = ''
+    chooseLanguage.innerHTML = ''
+       
+    const uniqueTheatre = [...new Set(chooseTicketData.map(item => item.theatreTitle))];
+
+    theatreTitle.innerHTML = uniqueTheatre.map(theatre => 
+        `<option class="bg-gray-700" value="${theatre}">${theatre}</option>`
+    ).join('');
+
+    const uniqueLanguages = [...new Set(chooseTicketData.map(item => item.language))];
+
+    chooseLanguage.innerHTML = uniqueLanguages.map(lang =>
+        `<option class="bg-gray-700" value="${lang}">${lang}</option>`
+    ).join('');
+
+    let code = ''
+    chooseTicketData.map(item => { 
+
+
+        code += 
+        `
+            <div class="flex items-center justify-between gap-4 p-4 text-white bg-[#3a3a3a] border-b border-gray-400">
+                <span class="w-20 text-sm">${item.time}</span>
+                <span class="w-20 text-sm">${item.movie.name}</span>
+                <span class=" text-sm text-center">${item.theatreTitle} | ${item.hallTitle}</span>
+                <span class="w-10 text-sm text-center">2D</span>
+                <img src="https://flagcdn.com/w40/ru.png" alt="Russian" class="w-6 h-6 rounded-full object-cover" />
+                <div class="px-3 py-1 text-center border border-white rounded-md leading-tight">
+                    <div class="text-xs font-semibold">AZE</div>
+                    <div class="text-[10px] text-gray-300">sub</div>
+                </div>
+                <button onclick="window.location.href='http://127.0.0.1:5500/ticketPage.htm?id=${item.sessionId}'" class="px-6 py-2 text-sm font-semibold text-white bg-[#a63128] rounded-full">
+                    Book a ticket
+                </button>
+            </div>
+        `
+        
+    })
+    buyTicket.innerHTML = code
+}
+

@@ -51,7 +51,6 @@ const mobileMenuTab = document.getElementById('mobileMenuTab');
                         <div class="flex items-center justify-between mt-1">
                             <span class="text-xs bg-gray-700 px-2 py-0.5 rounded">18+</span>
                             <p class="font-semibold flex gap-2">${movieLanguage}</p>
-                           
                         </div>
                     </div>
                 </div>
